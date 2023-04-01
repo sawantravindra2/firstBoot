@@ -13,7 +13,7 @@ import com.ravi.model.Employee;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-	// The dao repository will use the Mongodb-Repository to perform the database
+	// The dao repository will use the H2-Repository to perform the database
 	// operations.
 	@Autowired
 	EmployeeDao employeeDao;
@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.assignment.springboot.mongo.service.Employeeservice#createEmployee(java.
+	 * com.assignment.springboot.h2.service.Employeeservice#createEmployee(java.
 	 * util.List)
 	 */
 	/*
@@ -39,10 +39,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.assignment.springboot.mongo.service.Employeeservice#getAllEmployees()
+	 * com.assignment.springboot.h2.service.Employeeservice#getAllEmployees()
 	 */
 	@Override
-	public Collection<Employee> getAllEmployees() {
+	public List<Employee> getAllEmployees() {
 		return employeeDao.findAll();
 	}
 
@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.assignment.springboot.mongo.service.Employeeservice#findEmployeeById(int)
+	 * com.assignment.springboot.h2.service.Employeeservice#findEmployeeById(int)
 	 */
 	@Override
 	public Optional<Employee> findEmployeeById(int id) {
@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.assignment.springboot.mongo.service.Employeeservice#deleteEmployeeById(
+	 * com.assignment.springboot.h2.service.Employeeservice#deleteEmployeeById(
 	 * int)
 	 */
 	@Override
@@ -73,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.assignment.springboot.mongo.service.Employeeservice#updateEmployee(int)
+	 * com.assignment.springboot.h2.service.Employeeservice#updateEmployee(int)
 	 */
 	@Override
 	public void updateEmployee(Employee emp) {
@@ -84,7 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.assignment.springboot.mongo.service.Employeeservice#deleteAllEmployees()
+	 * com.assignment.springboot.h2.service.Employeeservice#deleteAllEmployees()
 	 */
 	@Override
 	public void deleteAllEmployees() {

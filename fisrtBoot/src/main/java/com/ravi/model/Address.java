@@ -1,9 +1,24 @@
 package com.ravi.model;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "address")
 public class Address {
 
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	int id;
+
+	@Column(name="city")
 	String city;
+
+	@Column(name="street_address")
 	String street_address;
+
+	@Column(name="state")
 	String state;
 
 	public String getCity() {
@@ -30,4 +45,22 @@ public class Address {
 		this.state = state;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Address(String city, String street_address, String state) {
+		this.id = id;
+		this.city = city;
+		this.street_address = street_address;
+		this.state = state;
+	}
+
+	public Address(){
+
+	}
 }

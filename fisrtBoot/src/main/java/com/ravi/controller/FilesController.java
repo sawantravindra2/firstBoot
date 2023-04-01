@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ravi.service.FilesStorageService;
 
 @Controller
-
 public class FilesController {
 
 	@Autowired

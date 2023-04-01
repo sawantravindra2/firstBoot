@@ -11,7 +11,7 @@ public interface EmployeeService {
 	//public void createEmployee(List<Employee> emp);
 	public void createEmployee(Employee emp);
 
-	public Collection<Employee> getAllEmployees();
+	public List<Employee> getAllEmployees();
 
 	public Optional<Employee> findEmployeeById(int id);
 
