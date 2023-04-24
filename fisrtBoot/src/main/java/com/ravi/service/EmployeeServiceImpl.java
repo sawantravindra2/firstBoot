@@ -1,9 +1,10 @@
 package com.ravi.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import com.ravi.dao.AddressDao;
+import com.ravi.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,16 @@ import com.ravi.dao.EmployeeDao;
 import com.ravi.model.Employee;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+	public class EmployeeServiceImpl implements EmployeeService {
 
 	// The dao repository will use the H2-Repository to perform the database
 	// operations.
 	@Autowired
 	EmployeeDao employeeDao;
+
+
+	@Autowired
+	AddressDao addressDao;
 
 	/*
 	 * (non-Javadoc)
@@ -30,9 +35,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * employeeDao.saveAll(emp); }
 	 */
 
+	//@Transactional
 	@Override
-	public void createEmployee(Employee emp) {
-		employeeDao.save(emp);
+	public Integer createEmployee(Employee emp) {
+		return employeeDao.save(emp).getId();
 	}
 
 	/*
@@ -89,5 +95,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void deleteAllEmployees() {
 		employeeDao.deleteAll();
+	}
+
+	@Override
+	public Address getByAddressId(Integer id) {
+		return addressDao.findById(id).get();
 	}
 }

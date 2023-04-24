@@ -1,5 +1,8 @@
 package com.ravi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -8,10 +11,10 @@ import java.util.List;
 @Table(name="employee")
 public class Employee implements Serializable {
 
-	@Id()
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Id
+	@Column(name="emp_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int emp_id;
 
 	@Column(name="firstName")
 	private String firstName;
@@ -22,16 +25,17 @@ public class Employee implements Serializable {
 	@Column(name="emailId")
 	private String emailId;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id",referencedColumnName = "id")
+	@OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@JoinColumn(name = "address_id")
 	private Address address;
 
 	public void setId(int id) {
-		this.id = id;
+		this.emp_id = id;
 	}
 
 	public int getId() {
-		return this.id;
+		return this.emp_id;
 	}
 
 	public void setFirstName(String firstName) {
@@ -66,15 +70,8 @@ public class Employee implements Serializable {
 		this.address = address;
 	}
 
-	public Employee(int id, String firstName, String lastName, String emailId, Address address) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
-		this.address = address;
-	}
-
 	public Employee(){
 
 	}
+
 }

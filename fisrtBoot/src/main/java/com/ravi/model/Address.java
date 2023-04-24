@@ -1,6 +1,9 @@
 package com.ravi.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,9 +11,9 @@ import javax.persistence.*;
 public class Address {
 
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	int id;
+	@Column(name="add_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int add_id;
 
 	@Column(name="city")
 	String city;
@@ -20,6 +23,11 @@ public class Address {
 
 	@Column(name="state")
 	String state;
+
+	@OneToOne(targetEntity = Employee.class, mappedBy = "address")
+	@JsonBackReference
+	private Employee employee;
+
 
 	public String getCity() {
 		return city;
@@ -45,22 +53,23 @@ public class Address {
 		this.state = state;
 	}
 
-	public int getId() {
-		return id;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Address(String city, String street_address, String state) {
-		this.id = id;
-		this.city = city;
-		this.street_address = street_address;
-		this.state = state;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public Address(){
 
+	}
+
+	public int getAdd_id() {
+		return add_id;
+	}
+
+	public void setAdd_id(int add_id) {
+		this.add_id = add_id;
 	}
 }

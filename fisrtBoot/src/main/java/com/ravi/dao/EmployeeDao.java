@@ -8,5 +8,5 @@ import com.ravi.model.Employee;
  
 @Repository
 public interface EmployeeDao extends JpaRepository<Employee, Integer> {
- 
+
 }

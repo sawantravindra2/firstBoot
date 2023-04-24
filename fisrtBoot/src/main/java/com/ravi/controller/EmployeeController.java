@@ -3,19 +3,16 @@ package com.ravi.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ravi.exception.EmployeeNotfoundException;
+import com.ravi.model.Address;
+import com.ravi.model.EmployeeDTO;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ravi.model.Employee;
 import com.ravi.service.EmployeeService;
@@ -24,8 +21,16 @@ import com.ravi.service.EmployeeService;
 @RequestMapping(value = "/api/h2/emp")
 public class EmployeeController {
 
+	private final EmployeeService employeeService;
+
+
+	public EmployeeController(EmployeeService employeeService){
+		this.employeeService=employeeService;
+	}
+
 	@Autowired
-	EmployeeService employeeService;
+	private ModelMapper modelMapper;
+
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -42,10 +47,10 @@ public class EmployeeController {
 	 */
 
 	@PostMapping(value = "/create")
-	public String create(@RequestBody Employee emp) {
+	public int create(@RequestBody Employee emp) {
 		logger.debug("Saving employees.");
-		employeeService.createEmployee(emp);
-		return "Employee records created.";
+		return employeeService.createEmployee(emp);
+		//return "Employee records created.";
 	}
 
 	/**
@@ -67,9 +72,11 @@ public class EmployeeController {
 	 * @return
 	 */
 	@GetMapping(value = "/getbyid/{employee-id}")
-	public Optional<Employee> getById(@PathVariable(value = "employee-id") int id) {
+	public EmployeeDTO getById(@PathVariable(value = "employee-id") int id) {
 		logger.debug("Getting employee with employee-id= {}.", id);
-		return employeeService.findEmployeeById(id);
+		return employeeService.findEmployeeById(id)
+						.map(emp -> convertToDTO(emp))
+				.orElseThrow(() -> new EmployeeNotfoundException());
 	}
 
 	/**
@@ -111,4 +118,22 @@ public class EmployeeController {
 		employeeService.deleteAllEmployees();
 		return "All employee records deleted.";
 	}
+
+
+	@GetMapping(value = "/getbyaddressid")
+	public Address getAddress(@RequestParam(name="addressId") Integer addressId ){
+
+		return employeeService.getByAddressId(addressId);
+	}
+
+
+	private EmployeeDTO convertToDTO (Employee employee)
+	{
+		EmployeeDTO orderDTO = modelMapper.map(employee, EmployeeDTO.class);
+		return orderDTO;
+	}
+
+
+
+
 }
