@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import com.ravi.exception.EmployeeNotfoundException;
 import com.ravi.model.Address;
+import com.ravi.model.AutoEmployeeMapper;
 import com.ravi.model.EmployeeDTO;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ public class EmployeeController {
 		this.employeeService=employeeService;
 	}
 
-	@Autowired
-	private ModelMapper modelMapper;
+	//@Autowired
+	private AutoEmployeeMapper modelMapper;
 
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -131,8 +131,8 @@ public class EmployeeController {
 
 	private EmployeeDTO convertToDTO (Employee employee)
 	{
-		EmployeeDTO orderDTO = modelMapper.map(employee, EmployeeDTO.class);
-		return orderDTO;
+		EmployeeDTO employeeDTO = modelMapper.mapToEmployeeDto(employee);
+		return employeeDTO;
 	}
 
 

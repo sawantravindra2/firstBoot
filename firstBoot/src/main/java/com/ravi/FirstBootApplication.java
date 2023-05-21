@@ -1,26 +1,24 @@
 package com.ravi;
 
-import org.modelmapper.ModelMapper;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.ravi.*" })
+@ComponentScan(basePackages = {"com.ravi.*"})
 public class FirstBootApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FirstBootApplication.class, args);
-
-		System.out.println("******** hello welcome with jenkins integration ************** ");
-
-	}
 
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FirstBootApplication.class, args);
+
+        System.out.println("******** hello welcome with jenkins integration ************** ");
+
+    }
+
+
 
 }

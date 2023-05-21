@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: spring-first-boot
+spec:
+  selector:
+    matchLabels:
+      app: spring-first-boot
+  replicas: 2 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: spring-first-boot
+    spec:
+      containers:
+        - name: spring-first-boot
+          image: ravi1257334/myapp:v1
+          # Image that will be used to containers in the cluster
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8102
+# The port that the container is running on in the cluster

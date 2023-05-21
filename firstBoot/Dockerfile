@@ -1,4 +1,4 @@
-FROM openjdk:8
-EXPOSE 8080
-ADD target/firstBoot-1.0.0.jar firstBoot-1.0.0.jar.jar
-ENTRYPOINT ["java","-jar","/firstBoot-1.0.0.jar"]
+FROM openjdk:19-alpine
+EXPOSE 8102
+COPY /target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
