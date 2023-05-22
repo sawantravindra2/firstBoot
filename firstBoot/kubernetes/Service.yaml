@@ -6,7 +6,7 @@ spec:
   selector:
     app: spring-first-boot
   ports:
-    - protocol: "TCP"
-      port: 80 # The port that the service is running on in the cluster
+    - protocol: TCP
+      port: 8090 # The port that the service is running on in the cluster
       targetPort: 8102 # The port exposed by the service
-  type: LoadBalancer # type of the service.
+  type: NodePort # type of the service.

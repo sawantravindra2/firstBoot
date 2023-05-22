@@ -1,0 +1,49 @@
+pipeline {
+
+  environment {
+    dockerimagename = "ravi1257334/myapp"
+    dockerImage = ""
+  }
+
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git 'https://github.com/sawantravindra2/firstBoot.git'
+      }
+    }
+
+    stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build dockerimagename
+        }
+      }
+    }
+
+    stage('Pushing Image') {
+      environment {
+               registryCredential = 'dockerhub-cred'
+           }
+      steps{
+        script {
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+            dockerImage.push("latest")
+          }
+        }
+      }
+    }
+
+    stage('Deploying first-boot-app container to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "kubernetes/Deployment.yaml", "kubernetes/Service.yaml")
+        }
+      }
+    }
+
+  }
+
+}
