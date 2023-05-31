@@ -13,6 +13,7 @@ import com.ravi.security.repo.RoleRepository;
 import com.ravi.security.repo.UserDetailsImpl;
 import com.ravi.security.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

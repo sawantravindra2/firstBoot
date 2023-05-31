@@ -2,8 +2,10 @@ package com.ravi.security.config;
 
 import com.ravi.security.repo.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,17 +20,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
+    @Value("${application.security.disabled:false}")
+    private boolean securityDisabled;
 
     @Autowired
     private CustomJwtAuthenticationFilter customJwtAuthenticationFilter;
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
 
 
     @Autowired
@@ -52,15 +55,20 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests().antMatchers("/helloadmin").hasRole("ADMIN")
-                //.antMatchers("/api/h2/emp/create").hasRole( "ROLE_ADMIN")
-                //.antMatchers("/api/h2/emp/getall").hasAnyRole( "ROLE_ADMIN" , "ROLE_USER")
-                .antMatchers("/api/auth/**", "/h2/**").permitAll().anyRequest().authenticated()
-                .and().headers().frameOptions().sameOrigin()
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
-                and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        if (securityDisabled) {
+            http.csrf().disable()
+                    .authorizeRequests().antMatchers("/helloadmin").hasRole("ADMIN")
+                    //.antMatchers("/api/h2/emp/create").hasRole( "ROLE_ADMIN")
+                    //.antMatchers("/api/h2/emp/getall").hasAnyRole( "ROLE_ADMIN" , "ROLE_USER")
+                    .antMatchers("/api/auth/**", "/h2/**" /*, "/async/**", "/actuator/**", "/api.github.com/users/"*/).permitAll().anyRequest().authenticated()
+                    .and().headers().frameOptions().sameOrigin()
+                    .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+                    and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                    and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        } else {
+            http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+        }
+
     }
 
 }
