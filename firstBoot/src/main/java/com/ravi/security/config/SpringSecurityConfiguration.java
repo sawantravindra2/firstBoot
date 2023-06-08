@@ -1,6 +1,8 @@
 package com.ravi.security.config;
 
 import com.ravi.security.repo.UserDetailsServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,16 +18,20 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
+
+
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${application.security.disabled:false}")
-    private boolean securityDisabled;
+
+    @Value("${application.security.enable:true}")
+    private boolean securityEnabled;
 
     @Autowired
     private CustomJwtAuthenticationFilter customJwtAuthenticationFilter;
@@ -55,7 +61,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        if (securityDisabled) {
+        if (securityEnabled) {
+            logger.info(" *********  Security is enabled ******* ");
             http.csrf().disable()
                     .authorizeRequests().antMatchers("/helloadmin").hasRole("ADMIN")
                     //.antMatchers("/api/h2/emp/create").hasRole( "ROLE_ADMIN")
@@ -66,7 +73,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                     and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         } else {
-            http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+            logger.info(" *********  Security is disabled ******* ");
         }
 
     }

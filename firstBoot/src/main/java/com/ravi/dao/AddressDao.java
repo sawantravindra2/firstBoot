@@ -9,7 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface AddressDao  extends JpaRepository<Address,Integer> {
-
-
     Optional<Address> findById(Integer id);
 }

@@ -21,5 +21,5 @@ public interface EmployeeService {
 
 	public void deleteAllEmployees();
 
-	Address getByAddressId(Integer city);
+	Optional<Address> getByAddressId(Integer city);
 }

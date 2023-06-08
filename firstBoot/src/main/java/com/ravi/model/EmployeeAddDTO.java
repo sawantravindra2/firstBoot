@@ -1,11 +1,13 @@
 package com.ravi.model;
 
-public class EmployeeDTO {
+public class EmployeeAddDTO {
+
 
     private String firstname;
     private String lastname;
 
     private Address userAddress;
+
 
     public String getFirstname() {
         return firstname;
@@ -28,16 +30,6 @@ public class EmployeeDTO {
     }
 
     public void setUserAddress(Address userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    public EmployeeDTO(){
-
-    }
-
-    public EmployeeDTO(String firstname, String lastname, Address userAddress) {
-        this.firstname = firstname;
-        this.lastname = lastname;
         this.userAddress = userAddress;
     }
 }
