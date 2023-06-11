@@ -72,4 +72,11 @@ public class Address {
 	public void setAdd_id(int add_id) {
 		this.add_id = add_id;
 	}
+
+	public Address(int add_id, String city, String street_address, String state) {
+		this.add_id = add_id;
+		this.city = city;
+		this.street_address = street_address;
+		this.state = state;
+	}
 }
