@@ -2,6 +2,8 @@ package com.ravi;
 
 import com.ravi.async.GitHubLookupService;
 import com.ravi.async.User;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,11 @@ import java.util.concurrent.CompletableFuture;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.ravi.*"})
 @EnableAsync
+@OpenAPIDefinition(info = @Info(title = "Product API", version = "2.0", description = "first boot app ms"))
 public class FirstBootApplication implements CommandLineRunner {
 
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    // private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     public static void main(String[] args) {
@@ -37,7 +40,8 @@ public class FirstBootApplication implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+
     }
 
 

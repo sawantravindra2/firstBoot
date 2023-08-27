@@ -30,7 +30,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-    @Value("${application.security.enable:true}")
+    @Value("${application.security.enable:false}")
     private boolean securityEnabled;
 
     @Autowired
@@ -62,7 +62,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         if (securityEnabled) {
-            logger.info(" *********  Security is enabled ******* ");
+            logger.info(" *********  Security is enabled ******* " + securityEnabled);
             http.csrf().disable()
                     .authorizeRequests().antMatchers("/helloadmin").hasRole("ADMIN")
                     //.antMatchers("/api/h2/emp/create").hasRole( "ROLE_ADMIN")

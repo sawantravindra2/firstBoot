@@ -1,0 +1,398 @@
+openapi: 3.0.1
+info:
+  title: Product API
+  description: first boot app ms
+  version: "2.0"
+servers:
+- url: "http://localhost:8102"
+  description: Generated server url
+paths:
+  /async/welcome:
+    get:
+      tags:
+      - async-controller
+      operationId: welcome
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+  /api/h2/emp/update/{employee-id}:
+    put:
+      tags:
+      - employee-controller
+      operationId: update
+      parameters:
+      - name: employee-id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/h2/emp/delete/{employee-id}:
+    delete:
+      tags:
+      - employee-controller
+      operationId: delete
+      parameters:
+      - name: employee-id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/h2/emp/getbyaddressid:
+    get:
+      tags:
+      - employee-controller
+      operationId: getAddress
+      parameters:
+      - name: addressId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/EmployeeAddDTO"
+  /api/h2/emp/create:
+    post:
+      tags:
+      - employee-controller
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /api/h2/emp/getall:
+    get:
+      tags:
+      - employee-controller
+      operationId: getAll
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+  /api/h2/emp/getbyid/{employee-id}:
+    get:
+      tags:
+      - employee-controller
+      operationId: getById
+      parameters:
+      - name: employee-id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/EmployeeDTO"
+  /api/h2/emp/deleteall:
+    delete:
+      tags:
+      - employee-controller
+      operationId: deleteAll
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/auth/signin:
+    post:
+      tags:
+      - authentication-controller
+      operationId: authenticateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/auth/signup:
+    post:
+      tags:
+      - authentication-controller
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignupRequest"
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/test/all:
+    get:
+      tags:
+      - test-controller
+      operationId: allAccess
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/test/user:
+    get:
+      tags:
+      - test-controller
+      operationId: userAccess
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/test/mod:
+    get:
+      tags:
+      - test-controller
+      operationId: moderatorAccess
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/test/admin:
+    get:
+      tags:
+      - test-controller
+      operationId: adminAccess
+      responses:
+        "400":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: default response
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        blog:
+          type: string
+    Address:
+      type: object
+      properties:
+        add_id:
+          type: integer
+          format: int32
+        city:
+          type: string
+        street_address:
+          type: string
+        state:
+          type: string
+        employee:
+          $ref: "#/components/schemas/Employee"
+    Employee:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        emailId:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+        id:
+          type: integer
+          format: int32
+    EmployeeAddDTO:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        userAddress:
+          $ref: "#/components/schemas/Address"
+    EmployeeDTO:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        userAddress:
+          $ref: "#/components/schemas/Address"
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    SignupRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
